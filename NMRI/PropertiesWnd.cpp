@@ -111,7 +111,7 @@ void CPropertiesWnd::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	CDockablePane::OnSettingChange(uFlags, lpszSection);
 }
 
-LRESULT CPropertiesWnd::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
+LRESULT CPropertiesWnd::OnPropertyChanged(WPARAM /*wparam*/, LPARAM lparam)
 {
 	if (!theFile) return 0;
 	

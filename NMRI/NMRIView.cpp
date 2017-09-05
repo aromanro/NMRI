@@ -153,7 +153,7 @@ void CNMRIView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 	OnContextMenu(this, point);
 }
 
-void CNMRIView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
+void CNMRIView::OnContextMenu(CWnd* /* pWnd */, CPoint /*point*/)
 {
 #ifndef SHARED_HANDLERS
 #endif

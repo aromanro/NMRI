@@ -101,7 +101,7 @@ void MemoryBitmap::SetMatrix(const double* results, int Width, int Height)
 
 			double val = results[Width*i + j];
 
-			data[pos] = int(val * 255);
+			data[pos] = (unsigned char)(val * 255.);
 			data[pos + 1] = data[pos];
 			data[pos + 2] = data[pos];
 		}
@@ -126,7 +126,7 @@ void MemoryBitmap::SetMatrix(const std::complex<double>* results, int Width, int
 
 			double val = std::norm(results[Width*i + j]);
 
-			data[pos] = int(val * 255);
+			data[pos] = (unsigned char)(val * 255.);
 			data[pos + 1] = data[pos];
 			data[pos + 2] = data[pos];
 		}
