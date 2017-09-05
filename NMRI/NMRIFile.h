@@ -83,7 +83,7 @@ public:
 
 	inline double GetRealValue(int posx, int posy)
 	{
-		return std::norm(theFrame[Width*posy + posx]);
+		return std::abs(theFrame[Width*posy + posx]);
 	}
 
 	const std::complex<double>* GetRealFrame() const { return theFrame; }
