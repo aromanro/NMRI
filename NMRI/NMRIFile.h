@@ -36,8 +36,8 @@ public:
 		double xCenter = Width / 2.;
 		double yCenter = Height / 2.;
 
-		double xLowPass = Width / 92.;
-		double yLowPass = Height / 92.;
+		double xLowPass = Width / 32.;
+		double yLowPass = Height / 32.;
 
 		double xLowLowLimit = xCenter - xLowPass;
 		double xHighLowLimit = xCenter + xLowPass;
