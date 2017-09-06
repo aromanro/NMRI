@@ -19,7 +19,7 @@ public:
 
 	bool Load(const CString& name);
 
-	inline std::complex<double> GetValue(int frame, int posx, int posy)
+	inline std::complex<double> GetValue(int frame, int posx, int posy) const
 	{
 		if (frame >= NrFrames) return std::complex<double>(0, 0);
 
@@ -33,25 +33,25 @@ public:
 
 	void InverseFFT(int frame)
 	{
-		double xCenter = Width / 2.;
-		double yCenter = Height / 2.;
+		const double xCenter = Width / 2.;
+		const double yCenter = Height / 2.;
 
-		double xLowPass = Width / 32.;
-		double yLowPass = Height / 32.;
+		const double xLowPass = Width / 32.;
+		const double yLowPass = Height / 32.;
 
-		double xLowLowLimit = xCenter - xLowPass;
-		double xHighLowLimit = xCenter + xLowPass;
-		double yLowLowLimit = yCenter - yLowPass;
-		double yHighLowLimit = yCenter + yLowPass;
+		const double xLowLowLimit = xCenter - xLowPass;
+		const double xHighLowLimit = xCenter + xLowPass;
+		const double yLowLowLimit = yCenter - yLowPass;
+		const double yHighLowLimit = yCenter + yLowPass;
 
-		double xHighPass = Width / 16.;
-		double yHighPass = Height / 16.;
+		const double xHighPass = Width / 16.;
+		const double yHighPass = Height / 16.;
 
 
-		double xLowHighLimit = xCenter - xHighPass;
-		double xHighHighLimit = xCenter + xHighPass;
-		double yLowHighLimit = yCenter - yHighPass;
-		double yHighHighLimit = yCenter + yHighPass;
+		const double xLowHighLimit = xCenter - xHighPass;
+		const double xHighHighLimit = xCenter + xHighPass;
+		const double yLowHighLimit = yCenter - yHighPass;
+		const double yHighHighLimit = yCenter + yHighPass;
 
 		for (int x = 0; x < Width; ++x)
 			for (int y = 0; y < Height; ++y)
@@ -81,7 +81,7 @@ public:
 				theFrame[y*Width + x] /= thenorm;
 	}
 
-	inline double GetRealValue(int posx, int posy)
+	inline double GetRealValue(int posx, int posy) const
 	{
 		return std::abs(theFrame[Width*posy + posx]);
 	}
