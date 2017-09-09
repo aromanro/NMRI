@@ -12,3 +12,7 @@ It needs the Head2D.dat raw data file one can find here: http://download.nvidia.
 By the way, here is the chapter, in case somebody wants to look over it: https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter48.html
 
 Hopefully I'll describe everything in more details soon.
+
+### PROGRAM IN ACTION
+
+[![Program video](https://img.youtube.com/vi/Kozj8Q_oHzw/0.jpg)](https://youtu.be/Kozj8Q_oHzw)
