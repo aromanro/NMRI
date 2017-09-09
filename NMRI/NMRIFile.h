@@ -33,6 +33,8 @@ public:
 
 	void InverseFFT(int frame)
 	{
+		if (!Width || !Height) return;
+
 		const double xCenter = Width / 2.;
 		const double yCenter = Height / 2.;
 
