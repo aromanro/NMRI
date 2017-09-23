@@ -15,4 +15,4 @@ Hopefully I'll describe everything in more details soon.
 
 ### PROGRAM IN ACTION
 
-[![Program video](https://img.youtube.com/vi/Kozj8Q_oHzw/0.jpg)](https://youtu.be/Kozj8Q_oHzw)
+[![Program video](https://img.youtube.com/vi/PJtFMdEHA1A/0.jpg)](https://youtu.be/PJtFMdEHA1A)
