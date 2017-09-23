@@ -93,7 +93,7 @@ void MemoryBitmap::SetMatrix(const double* results, int Width, int Height)
 
 	for (int i = 0; i < Height; ++i)
 	{
-		int line = (m_height - i - 1) * stride;
+		int line = (Height - i - 1) * stride;
 
 		for (int j = 0; j < Width; ++j)
 		{
@@ -118,7 +118,7 @@ void MemoryBitmap::SetMatrix(const std::complex<double>* results, int Width, int
 
 	for (int i = 0; i < Height; ++i)
 	{
-		int line = (m_height - i - 1) * stride;
+		int line = (Height - i - 1) * stride;
 
 		for (int j = 0; j < Width; ++j)
 		{

@@ -25,13 +25,13 @@ public:
 
 		int pos = Width * Height * frame;
 
-		float re = realData[pos + Width*posy + posx];
-		float im = imgData[pos + Width*posy + posx];
+		float re = realData[pos + Height*posx + posy];
+		float im = imgData[pos + Height*posx + posy];
 
 		return std::complex<double>(re, im);
 	}
 
-	void InverseFFT(int frame)
+	void FFT(int frame)
 	{
 		if (!Width || !Height) return;
 
@@ -74,7 +74,7 @@ public:
 				srcFrame[y*Width + x] = (themax > 1E-14 ? val / themax : val);
 			}
 
-		fft.inv(srcFrame, theFrame, Width, Height);
+		fft.fwd(srcFrame, theFrame, Width, Height);
 
 	    const double thenorm = sqrt(Width*Height);
 
@@ -85,7 +85,7 @@ public:
 
 	inline double GetRealValue(int posx, int posy) const
 	{
-		return std::abs(theFrame[Width*posy + posx]);
+		return std::abs(theFrame[Height*posx + posy]);
 	}
 
 	const std::complex<double>* GetRealFrame() const { return theFrame; }

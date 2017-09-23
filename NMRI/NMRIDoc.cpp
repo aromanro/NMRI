@@ -149,7 +149,7 @@ bool CNMRIDoc::Load(const CString& name)
 {
 	if (theFile.Load(name))
 	{
-		theFile.InverseFFT(0);
+		theFile.FFT(0);
 
 		return true;
 	}

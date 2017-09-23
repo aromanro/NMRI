@@ -226,7 +226,7 @@ void CNMRIView::OnTimer(UINT_PTR nIDEvent)
 
 	if (theFrame >= pDoc->theFile.NrFrames) theFrame = 0;
 
-	pDoc->theFile.InverseFFT(theFrame);
+	pDoc->theFile.FFT(theFrame);
 
 	Invalidate();
 }
