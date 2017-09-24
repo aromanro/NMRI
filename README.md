@@ -1,7 +1,7 @@
 # NMRI
 2D Fourier Transform of Nuclear Magnetic Resonance Imaging raw data
 
-Description coming soon on https://compphys.go.ro
+Description on https://compphys.go.ro/nuclear-magnetic-resonance-and-fourier-transform/
 
 Basically this is a quickly implemented project to test some wrapper classes for FFTW library: http://www.fftw.org/ Obviously, the project needs the FFTW library.
 
