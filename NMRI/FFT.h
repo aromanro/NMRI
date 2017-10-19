@@ -101,14 +101,14 @@ namespace Fourier {
 
 		// 1D
 
-		inline void fwd(std::complex<double>* src, std::complex<double> *dst, int n)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n)
 		{
-			GetPlan(false, false, src, dst, n).fwd(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n);
+			GetPlan(false, false, src, dst, n).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n);
 		}
 
-		inline void inv(std::complex<double>* src, std::complex<double> *dst, int n)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n)
 		{
-			GetPlan(true, false, src, dst, n).inv(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n);
+			GetPlan(true, false, src, dst, n).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n);
 		}
 
 		inline void fwd(double* src, std::complex<double> *dst, int n)
@@ -118,32 +118,32 @@ namespace Fourier {
 
 		inline void inv(std::complex<double>* src, double *dst, int n)
 		{
-			GetPlan(true, true, src, dst, n).inv(reinterpret_cast<fftw_complex*>(src), dst, n);
+			GetPlan(true, true, src, dst, n).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), dst, n);
 		}
 
 		// 2D
 
-		inline void fwd(std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
 		{
-			GetPlan(false, false, src, dst, n0, n1).fwd(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n0, n1);
+			GetPlan(false, false, src, dst, n0, n1).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1);
 		}
 
-		inline void inv(std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
 		{
-			GetPlan(true, false, src, dst, n0, n1).inv(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n0, n1);
+			GetPlan(true, false, src, dst, n0, n1).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1);
 		}
 
 
 		// 3D
 
-		inline void fwd(std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
 		{
-			GetPlan(false, false, src, dst, n0, n1, n2).fwd(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
+			GetPlan(false, false, src, dst, n0, n1, n2).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
 		}
 
-		inline void inv(std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
 		{
-			GetPlan(true, false, src, dst, n0, n1, n2).inv(reinterpret_cast<fftw_complex*>(src), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
+			GetPlan(true, false, src, dst, n0, n1, n2).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
 		}
 
 		void Clear()
@@ -165,20 +165,20 @@ namespace Fourier {
 		// in place, aligned, inverse, different types, n1, n2, n3
 		std::map< std::tuple<bool, bool, bool, bool, unsigned int, unsigned int, unsigned int>, FFTWPlan> Plans3D;
 
-		inline bool InPlace(void *src, void *dst) { return src == dst; }
-		inline bool Aligned(void *src, void *dst) { return ((reinterpret_cast<size_t>(src) & 0xF) | (reinterpret_cast<size_t>(dst) & 0xF)) == 0; }
+		inline bool InPlace(const void *src, void *dst) { return src == dst; }
+		inline bool Aligned(const void *src, void *dst) { return ((reinterpret_cast<size_t>(src) & 0xF) | (reinterpret_cast<size_t>(dst) & 0xF)) == 0; }
 
-		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, void *src, void* dst, unsigned int n)
+		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, const void *src, void* dst, unsigned int n)
 		{
 			return Plans1D[std::tuple<bool, bool, bool, bool, unsigned int>(InPlace(src, dst), Aligned(src, dst), inverse, differentTypes, n)];
 		}
 
-		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, void *src, void* dst, unsigned int n0, unsigned int n1)
+		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, const void *src, void* dst, unsigned int n0, unsigned int n1)
 		{
 			return Plans2D[std::tuple<bool, bool, bool, bool, unsigned int, unsigned int>(InPlace(src, dst), Aligned(src, dst), inverse, differentTypes, n0, n1)];
 		}
 
-		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, void *src, void* dst, unsigned int n0, unsigned int n1, unsigned int n2)
+		inline FFTWPlan& GetPlan(bool inverse, bool differentTypes, const void *src, void* dst, unsigned int n0, unsigned int n1, unsigned int n2)
 		{
 			return Plans3D[std::tuple<bool, bool, bool, bool, unsigned int, unsigned int, unsigned int>(InPlace(src, dst), Aligned(src, dst), inverse, differentTypes, n0, n1, n2)];
 		}
