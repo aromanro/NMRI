@@ -101,34 +101,34 @@ namespace Fourier {
 
 		// 1D
 
-		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, unsigned int n)
 		{
 			GetPlan(false, false, src, dst, n).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n);
 		}
 
-		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, unsigned int n)
 		{
 			GetPlan(true, false, src, dst, n).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n);
 		}
 
-		inline void fwd(double* src, std::complex<double> *dst, int n)
+		inline void fwd(double* src, std::complex<double> *dst, unsigned int n)
 		{
 			GetPlan(false, true, src, dst, n).fwd(src, reinterpret_cast<fftw_complex*>(dst), n);
 		}
 
-		inline void inv(std::complex<double>* src, double *dst, int n)
+		inline void inv(std::complex<double>* src, double *dst, unsigned int n)
 		{
 			GetPlan(true, true, src, dst, n).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), dst, n);
 		}
 
 		// 2D
 
-		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, unsigned int n0, unsigned int n1)
 		{
 			GetPlan(false, false, src, dst, n0, n1).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1);
 		}
 
-		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, unsigned int n0, unsigned int n1)
 		{
 			GetPlan(true, false, src, dst, n0, n1).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1);
 		}
@@ -136,12 +136,12 @@ namespace Fourier {
 
 		// 3D
 
-		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
+		inline void fwd(const std::complex<double>* src, std::complex<double> *dst, unsigned int n0, unsigned int n1, unsigned int n2)
 		{
 			GetPlan(false, false, src, dst, n0, n1, n2).fwd(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
 		}
 
-		inline void inv(const std::complex<double>* src, std::complex<double> *dst, int n0, int n1, int n2)
+		inline void inv(const std::complex<double>* src, std::complex<double> *dst, unsigned int n0, unsigned int n1, unsigned int n2)
 		{
 			GetPlan(true, false, src, dst, n0, n1, n2).inv(reinterpret_cast<fftw_complex*>(const_cast<std::complex<double>*>(src)), reinterpret_cast<fftw_complex*>(dst), n0, n1, n2);
 		}
