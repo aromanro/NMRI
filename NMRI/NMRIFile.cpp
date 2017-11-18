@@ -63,7 +63,7 @@ bool NMRIFile::Load(const CString& name)
 		for (int x = 0; x < Width; ++x)
 			for (int y = 0; y < Height; ++y)
 			{
-				std::complex<double> val = GetValue(frame, x, y);
+				const std::complex<double> val = GetValue(frame, x, y);
 
 				if (themax < std::norm(val)) themax = std::norm(val);
 			}

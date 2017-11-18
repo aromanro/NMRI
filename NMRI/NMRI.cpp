@@ -101,8 +101,7 @@ BOOL CNMRIApp::InitInstance()
 
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
+	CSingleDocTemplate* pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CNMRIDoc),
 		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
@@ -127,7 +126,7 @@ BOOL CNMRIApp::InitInstance()
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 
-	((CMainFrame*)m_pMainWnd)->Init();
+	dynamic_cast<CMainFrame*>(m_pMainWnd)->Init();
 
 	return TRUE;
 }

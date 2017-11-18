@@ -93,15 +93,15 @@ void MemoryBitmap::SetMatrix(const double* results, int Width, int Height)
 
 	for (int i = 0; i < Height; ++i)
 	{
-		int line = (Height - i - 1) * stride;
+		const int line = (Height - i - 1) * stride;
 
 		for (int j = 0; j < Width; ++j)
 		{
 			int pos = line + 3 * j;
 
-			double val = results[Width*i + j];
+			const double val = results[Width*i + j];
 
-			data[pos] = (unsigned char)(val * 255.);
+			data[pos] = static_cast<unsigned char>(val * 255.);
 			data[pos + 1] = data[pos];
 			data[pos + 2] = data[pos];
 		}
@@ -114,19 +114,19 @@ void MemoryBitmap::SetMatrix(const std::complex<double>* results, int Width, int
 
 	SetSize(Width, Height);
 
-	int stride = GetStrideLength();
+	const int stride = GetStrideLength();
 
 	for (int i = 0; i < Height; ++i)
 	{
-		int line = (Height - i - 1) * stride;
+		const int line = (Height - i - 1) * stride;
 
 		for (int j = 0; j < Width; ++j)
 		{
-			int pos = line + 3 * j;
+			const int pos = line + 3 * j;
 
-			double val = std::abs(results[Width*i + j]);
+			const double val = std::abs(results[Width*i + j]);
 
-			data[pos] = (unsigned char)(val * 255.);
+			data[pos] = static_cast<unsigned char>(val * 255.);
 			data[pos + 1] = data[pos];
 			data[pos + 2] = data[pos];
 		}

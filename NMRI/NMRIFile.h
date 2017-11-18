@@ -23,10 +23,10 @@ public:
 	{
 		if (frame >= NrFrames) return std::complex<double>(0, 0);
 
-		int pos = Width * Height * frame;
+		const int pos = Width * Height * frame;
 
-		float re = realData[pos + Height*posx + posy];
-		float im = imgData[pos + Height*posx + posy];
+		const float re = realData[pos + Height*posx + posy];
+		const float im = imgData[pos + Height*posx + posy];
 
 		return std::complex<double>(re, im);
 	}
@@ -70,7 +70,7 @@ public:
 					continue;
 				}
 
-				std::complex<double> val = GetValue(frame, x, y);
+				const std::complex<double> val = GetValue(frame, x, y);
 				srcFrame[y*Width + x] = (themax > 1E-14 ? val / themax : val);
 			}
 

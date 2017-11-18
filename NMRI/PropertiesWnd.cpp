@@ -111,11 +111,11 @@ void CPropertiesWnd::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	CDockablePane::OnSettingChange(uFlags, lpszSection);
 }
 
-LRESULT CPropertiesWnd::OnPropertyChanged(WPARAM /*wparam*/, LPARAM lparam)
+LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lparam)
 {
 	if (!theFile) return 0;
 	
-	CMFCPropertyGridProperty *prop = (CMFCPropertyGridProperty *)lparam;
+	const CMFCPropertyGridProperty *prop = (CMFCPropertyGridProperty *)lparam;
 
 
 	 if (prop)

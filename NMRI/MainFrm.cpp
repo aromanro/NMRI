@@ -54,8 +54,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	BOOL bNameValid;
-
 	if (!m_wndMenuBar.Create(this))
 	{
 		TRACE0("Failed to create menubar\n");
@@ -75,7 +73,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	CString strToolBarName;
-	bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
+	BOOL bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
 	ASSERT(bNameValid);
 	m_wndToolBar.SetWindowText(strToolBarName);
 
@@ -187,7 +185,7 @@ BOOL CMainFrame::CreateDockingWindows()
 
 void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 {
-	HICON hPropertiesBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_PROPERTIES_WND_HC : IDI_PROPERTIES_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+	HICON hPropertiesBarIcon = static_cast<HICON>(::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_PROPERTIES_WND_HC : IDI_PROPERTIES_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0));
 	m_wndProperties.SetIcon(hPropertiesBarIcon, FALSE);
 
 }
@@ -352,7 +350,7 @@ void CMainFrame::OnFileOpen()
 	{
 		CString pathName = dlg.GetPathName();
 
-		CNMRIDoc* pDoc = (CNMRIDoc*)GetActiveDocument();
+		CNMRIDoc* pDoc = dynamic_cast<CNMRIDoc*>(GetActiveDocument());
 
 		if (pDoc)
 		{
@@ -371,7 +369,7 @@ void CMainFrame::OnFileOpen()
 
 void CMainFrame::Init()
 {
-	CNMRIDoc* pDoc = (CNMRIDoc*)GetActiveDocument();
+	CNMRIDoc* pDoc = dynamic_cast<CNMRIDoc*>(GetActiveDocument());
 
 	if (pDoc)
 	{

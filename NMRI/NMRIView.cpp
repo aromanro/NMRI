@@ -59,7 +59,7 @@ BOOL CNMRIView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CNMRIView::OnDraw(CDC* pDC)
 {
-	CNMRIDoc* pDoc = GetDocument();
+	const CNMRIDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
@@ -176,7 +176,7 @@ void CNMRIView::Dump(CDumpContext& dc) const
 CNMRIDoc* CNMRIView::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNMRIDoc)));
-	return (CNMRIDoc*)m_pDocument;
+	return dynamic_cast<CNMRIDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
