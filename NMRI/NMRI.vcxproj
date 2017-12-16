@@ -80,7 +80,7 @@
     <LibraryPath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;C:\Program Files (x86)\Microsoft DirectX SDK (August 2007)\Lib\x86;C:\Program Files (x86)\Business Objects\Common\3.5;C:\LIBs\JetVC\Intel;C:\LIBs\boost_1_44_0\stage\lib;C:\Program Files (x86)\Java\jdk1.6.0_20\lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\bin;$(VCInstallDir)PlatformSDK\common\bin;$(ExecutablePath)</ExecutablePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>true</EnableCppCoreCheck>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -89,7 +89,7 @@
     <LibraryPath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\lib\amd64;$(VSInstallDir)SDK\v2.0\lib\amd64;$(LibraryPath)</LibraryPath>
     <ExecutablePath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\bin;$(ExecutablePath)</ExecutablePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>true</EnableCppCoreCheck>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,7 +111,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,7 +135,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
