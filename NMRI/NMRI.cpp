@@ -31,9 +31,8 @@ END_MESSAGE_MAP()
 // CNMRIApp construction
 
 CNMRIApp::CNMRIApp()
+	: m_nAppLook(0), m_bHiColorIcons(TRUE)
 {
-	m_bHiColorIcons = TRUE;
-
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;
 #ifdef _MANAGED
