@@ -18,6 +18,8 @@ protected: // create from serialization only
 public:
 	NMRIFile theFile;
 
+	bool animate;
+
 // Operations
 public:
 

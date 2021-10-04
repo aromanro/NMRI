@@ -54,6 +54,8 @@ public:
 	afx_msg void OnFileOpen();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	void Init();
+	afx_msg void OnViewAnimation();
+	afx_msg void OnUpdateViewAnimation(CCmdUI* pCmdUI);
 };
 
 

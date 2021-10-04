@@ -27,6 +27,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
+	ON_COMMAND(ID_VIEW_ANIMATION, &CMainFrame::OnViewAnimation)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_ANIMATION, &CMainFrame::OnUpdateViewAnimation)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -374,5 +376,27 @@ void CMainFrame::Init()
 	if (pDoc)
 	{
 		m_wndProperties.theFile = &pDoc->theFile;
+	}
+}
+
+
+void CMainFrame::OnViewAnimation()
+{
+	CNMRIDoc* pDoc = dynamic_cast<CNMRIDoc*>(GetActiveDocument());
+
+	if (pDoc)
+	{
+		pDoc->animate = !pDoc->animate;
+	}
+}
+
+
+void CMainFrame::OnUpdateViewAnimation(CCmdUI* pCmdUI)
+{
+	CNMRIDoc* pDoc = dynamic_cast<CNMRIDoc*>(GetActiveDocument());
+
+	if (pDoc)
+	{
+		pCmdUI->SetCheck(pDoc->animate);
 	}
 }

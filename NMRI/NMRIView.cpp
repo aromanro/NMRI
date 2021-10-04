@@ -216,17 +216,17 @@ void CNMRIView::OnTimer(UINT_PTR nIDEvent)
 {
 	CView::OnTimer(nIDEvent);
 
-
 	CNMRIDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	++theFrame;
-
-	if (theFrame >= pDoc->theFile.NrFrames) theFrame = 0;
+	// the reason why the timer is not stopped is that the image should be updated if the filter is changed
+	if (pDoc->animate)
+	{
+		if (++theFrame >= pDoc->theFile.NrFrames) theFrame = 0;
+	}
 
 	pDoc->theFile.FFT(theFrame);
-
 	Invalidate();
 }

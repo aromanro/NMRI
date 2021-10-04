@@ -31,6 +31,7 @@ END_MESSAGE_MAP()
 // CNMRIDoc construction/destruction
 
 CNMRIDoc::CNMRIDoc()
+	: animate(true)
 {
 	// TODO: add one-time construction code here
 
