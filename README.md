@@ -1,6 +1,8 @@
 # NMRI
 2D Fourier Transform of Nuclear Magnetic Resonance Imaging raw data
 
+[![CodeFactor](https://www.codefactor.io/repository/github/aromanro/nmri/badge)](https://www.codefactor.io/repository/github/aromanro/nmri)
+
 Description on https://compphys.go.ro/nuclear-magnetic-resonance-and-fourier-transform/
 
 Basically this is a quickly implemented project to test some wrapper classes for FFTW library: http://www.fftw.org/ Obviously, the project needs the FFTW library.
