@@ -189,7 +189,6 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 {
 	HICON hPropertiesBarIcon = static_cast<HICON>(::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_PROPERTIES_WND_HC : IDI_PROPERTIES_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0));
 	m_wndProperties.SetIcon(hPropertiesBarIcon, FALSE);
-
 }
 
 // CMainFrame diagnostics

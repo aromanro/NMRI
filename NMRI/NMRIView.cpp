@@ -40,7 +40,6 @@ CNMRIView::CNMRIView()
 	: theFrame(0), timer(NULL)
 {
 	// TODO: add construction code here
-
 }
 
 CNMRIView::~CNMRIView()

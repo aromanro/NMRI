@@ -19,7 +19,6 @@ public:
 
 // Operations
 public:
-
 // Overrides
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view

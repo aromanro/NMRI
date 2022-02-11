@@ -76,11 +76,7 @@ public:
 
 		fft.fwd(srcFrame, theFrame, Width, Height);
 
-	    const double thenorm = sqrt(Width*Height);
-
-		for (int x = 0; x < Width; ++x)
-			for (int y = 0; y < Height; ++y)
-				theFrame[y*Width + x] /= thenorm;
+		Normalize(Width, Height);
 	}
 
 	inline double GetRealValue(int posx, int posy) const
@@ -92,6 +88,15 @@ public:
 	const std::complex<double>* GetFrame() const { return srcFrame; }
 
 protected:
+	inline void Normalize(int Width, int Height)
+	{
+		const double thenorm = sqrt(Width * Height);
+
+		for (int x = 0; x < Width; ++x)
+			for (int y = 0; y < Height; ++y)
+				theFrame[y * Width + x] /= thenorm;
+	}
+
 	double themax;
 
 	float* realData;

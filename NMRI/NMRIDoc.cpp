@@ -34,7 +34,6 @@ CNMRIDoc::CNMRIDoc()
 	: animate(true)
 {
 	// TODO: add one-time construction code here
-
 }
 
 CNMRIDoc::~CNMRIDoc()
