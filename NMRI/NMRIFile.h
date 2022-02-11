@@ -35,6 +35,33 @@ public:
 	{
 		if (!Width || !Height) return;
 
+		Filter(frame);
+
+		fft.fwd(srcFrame, theFrame, Width, Height);
+
+		Normalize();
+	}
+
+	inline double GetRealValue(int posx, int posy) const
+	{
+		return std::abs(theFrame[Height*posx + posy]);
+	}
+
+	const std::complex<double>* GetRealFrame() const { return theFrame; }
+	const std::complex<double>* GetFrame() const { return srcFrame; }
+
+protected:
+	inline void Normalize()
+	{
+		const double thenorm = sqrt(Width * Height);
+
+		for (int x = 0; x < Width; ++x)
+			for (int y = 0; y < Height; ++y)
+				theFrame[y * Width + x] /= thenorm;
+	}
+
+	inline void Filter(int frame)
+	{
 		const double xCenter = Width / 2.;
 		const double yCenter = Height / 2.;
 
@@ -60,41 +87,19 @@ public:
 			{
 				if (filterLowFreqs && x > xLowLowLimit && x < xHighLowLimit && y > yLowLowLimit && y < yHighLowLimit)
 				{
-					srcFrame[y*Width + x] = 0;
+					srcFrame[y * Width + x] = 0;
 					continue;
 				}
 
 				if (filterHighFreqs && (x < xLowHighLimit || x > xHighHighLimit || y < yLowHighLimit || y > yHighHighLimit))
 				{
-					srcFrame[y*Width + x] = 0;
+					srcFrame[y * Width + x] = 0;
 					continue;
 				}
 
 				const std::complex<double> val = GetValue(frame, x, y);
-				srcFrame[y*Width + x] = (themax > 1E-14 ? val / themax : val);
+				srcFrame[y * Width + x] = (themax > 1E-14 ? val / themax : val);
 			}
-
-		fft.fwd(srcFrame, theFrame, Width, Height);
-
-		Normalize(Width, Height);
-	}
-
-	inline double GetRealValue(int posx, int posy) const
-	{
-		return std::abs(theFrame[Height*posx + posy]);
-	}
-
-	const std::complex<double>* GetRealFrame() const { return theFrame; }
-	const std::complex<double>* GetFrame() const { return srcFrame; }
-
-protected:
-	inline void Normalize(int Width, int Height)
-	{
-		const double thenorm = sqrt(Width * Height);
-
-		for (int x = 0; x < Width; ++x)
-			for (int y = 0; y < Height; ++y)
-				theFrame[y * Width + x] /= thenorm;
 	}
 
 	double themax;
