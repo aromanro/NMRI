@@ -520,7 +520,7 @@ void CVTKView::GrabResultsFromDoc()
 			for (unsigned int j = 0; j < Height; ++j)
 			{
 				const double val = std::abs(image[Width * i + j]);
-				dataImage->SetScalarComponentFromDouble(i, j, k, 0, val / m);
+				dataImage->SetScalarComponentFromDouble(i, Width - j - 1, k, 0, val / m);
 			}
 	}
 

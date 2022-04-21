@@ -19,18 +19,6 @@ public:
 
 	bool Load(const CString& name);
 
-	inline std::complex<double> GetValue(int frame, int posx, int posy) const
-	{
-		if (frame >= NrFrames) return std::complex<double>(0, 0);
-
-		const int pos = Width * Height * frame;
-
-		const float re = realData[pos + Height*posx + posy];
-		const float im = imgData[pos + Height*posx + posy];
-
-		return std::complex<double>(re, im);
-	}
-
 	void FFT(int frame)
 	{
 		if (!Width || !Height) return;
@@ -54,6 +42,18 @@ public:
 	const std::complex<double>* GetFrame() const { return srcFrame; }
 
 protected:
+	inline std::complex<double> GetValue(int frame, int posx, int posy) const
+	{
+		if (frame >= NrFrames) return std::complex<double>(0, 0);
+
+		const int pos = Width * Height * frame;
+
+		const float re = realData[pos + Height * posx + posy];
+		const float im = imgData[pos + Height * posx + posy];
+
+		return std::complex<double>(re, im);
+	}
+
 	inline void Normalize()
 	{
 		const double thenorm = sqrt(Width * Height);
