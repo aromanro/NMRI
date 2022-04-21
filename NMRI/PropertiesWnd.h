@@ -1,7 +1,7 @@
 
 #pragma once
 
-class NMRIFile;
+class CNMRIDoc;
 
 class CPropertiesWnd : public CDockablePane
 {
@@ -20,7 +20,7 @@ public:
 	}
 
 
-	NMRIFile* theFile;
+	CNMRIDoc* theDoc;
 
 protected:
 	CMFCPropertyGridCtrl m_wndPropList;

@@ -382,7 +382,7 @@ void CMainFrame::Init()
 
 	if (pDoc)
 	{
-		m_wndProperties.theFile = &pDoc->theFile;
+		m_wndProperties.theDoc = pDoc;
 	}
 }
 

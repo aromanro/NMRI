@@ -10,6 +10,7 @@
 #endif
 
 #include <vtkFixedPointVolumeRayCastMapper.h>
+#include <vtkVolumeRayCastCompositeFunction.h>
 #include <vtkVolumeProperty.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
@@ -143,8 +144,6 @@ protected:
 	vtkVolume* volume;
 
 	vtkSmartPointer<vtkTextActor> textActor;
-
-	//UINT_PTR timer;
 
 	unsigned int Width = 0;
 	unsigned int Height = 0;

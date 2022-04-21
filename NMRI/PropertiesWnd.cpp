@@ -6,7 +6,7 @@
 #include "MainFrm.h"
 #include "NMRI.h"
 
-#include "NMRIFile.h"
+#include "NMRIDoc.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -18,7 +18,7 @@ static char THIS_FILE[]=__FILE__;
 // CResourceViewBar
 
 CPropertiesWnd::CPropertiesWnd()
-	: theFile(nullptr)
+	: theDoc(nullptr)
 {
 }
 
@@ -113,7 +113,7 @@ void CPropertiesWnd::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lparam)
 {
-	if (!theFile) return 0;
+	if (!theDoc) return 0;
 	
 	const CMFCPropertyGridProperty *prop = (CMFCPropertyGridProperty *)lparam;
 
@@ -127,12 +127,14 @@ LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lp
 		 switch (prop->GetData())
 		 {
 			case 0:
-				theFile->filterLowFreqs = v.boolVal;
+				theDoc->theFile.filterLowFreqs = v.boolVal;
 				break;
 			case 1:
-				theFile->filterHighFreqs = v.boolVal;
+				theDoc->theFile.filterHighFreqs = v.boolVal;
 				break;
 		 }
+
+		 theDoc->UpdateViews();
 	 }
 
 	 return 0;

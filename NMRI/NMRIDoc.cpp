@@ -14,6 +14,8 @@
 #include "NMRIFile.h"
 #include "MainFrm.h"
 
+#include "VTKView.h"
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -155,4 +157,20 @@ bool CNMRIDoc::Load(const CString& name)
 	}
 
 	return false;
+}
+
+
+void CNMRIDoc::UpdateViews()
+{
+	POSITION pos = GetFirstViewPosition();
+	while (pos != NULL) {
+		CView* pView = GetNextView(pos);
+		
+		// the other one refreshes itself by timer
+		if (pView->IsKindOf(RUNTIME_CLASS(CVTKView)))
+		{
+			((CVTKView*)pView)->GrabResultsFromDoc();
+			((CVTKView*)pView)->Invalidate();
+		}
+	}
 }

@@ -39,6 +39,8 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+	void UpdateViews();
+
 protected:
 // Generated message map functions
 protected:

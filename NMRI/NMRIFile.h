@@ -35,8 +35,11 @@ public:
 	{
 		if (!Width || !Height) return;
 
-		Filter(frame);
+		// this is done due of the order of the frames in the file!
+		if (frame % 2) frame = frame / 2; 
+		else frame = NrFrames / 2 + frame / 2;
 
+		Filter(frame);
 		fft.fwd(srcFrame, theFrame, Width, Height);
 
 		Normalize();
