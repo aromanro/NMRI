@@ -112,12 +112,9 @@ public:
 
 // Operations
 public:
-	int lastViewOrbital = -1;
-	int saveLastViewOrbital = -1; // for recovery
-
 	ErrorObserver* errorObserver = nullptr;
 
-	std::vector<vtkImageData*> dataImage;
+	vtkImageData* dataImage = nullptr;
 
 	void RecoverFromWarning();
 

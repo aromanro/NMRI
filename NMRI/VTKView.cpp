@@ -113,8 +113,8 @@ CVTKView::~CVTKView()
 
 	errorObserver->Delete();
 
-	for (unsigned int i = 0; i < dataImage.size(); ++i)
-		dataImage[i]->Delete();
+	if (dataImage)
+		dataImage->Delete();
 }
 
 // CDFTView drawing
@@ -406,6 +406,8 @@ void CVTKView::RecoverFromWarning()
 
 void CVTKView::Pipeline()
 {
+	if (!dataImage) return;
+
 	const CNMRIDoc* pDoc = GetDocument();
 	if (!pDoc) return;
 
@@ -421,7 +423,7 @@ void CVTKView::Pipeline()
 	//opacityTransferFunction->AddPoint(results.maxs[i], 1);
 
 
-	//volumeMapper->SetInputData(dataImage[i]);	
+	if (dataImage) volumeMapper->SetInputData(dataImage);	
 
 	ren->AddViewProp(volume);
 
