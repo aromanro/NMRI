@@ -26,7 +26,7 @@ bool NMRIFile::Load(const CString& name)
 	fread(&Width,sizeof(int),1,f);
 	fread(&Height,sizeof(int),1,f);
 
-	int Size = Width * Height * NrFrames;
+	const int Size = Width * Height * NrFrames;
 
 	delete[] realData;
 	delete[] imgData;
@@ -57,7 +57,6 @@ bool NMRIFile::Load(const CString& name)
 	}
 
 	fclose(f);
-
 
 	for (int frame = 0; frame < NrFrames; ++frame)
 		for (int x = 0; x < Width; ++x)

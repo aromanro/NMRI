@@ -144,7 +144,11 @@ protected:
 
 	vtkSmartPointer<vtkTextActor> textActor;
 
-	UINT_PTR timer;
+	//UINT_PTR timer;
+
+	unsigned int Width = 0;
+	unsigned int Height = 0;
+	unsigned int NrFrames = 0;
 
 // Generated message map functions
 protected:
@@ -157,7 +161,7 @@ public:
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	void Pipeline();
 	afx_msg void OnDestroy();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	//afx_msg void OnTimer(UINT_PTR nIDEvent);
 	void GrabResultsFromDoc();
 };
 

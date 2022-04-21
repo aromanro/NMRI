@@ -76,7 +76,7 @@ END_MESSAGE_MAP()
 // CDFTView construction/destruction
 
 CVTKView::CVTKView()
-	: ren(nullptr), iren(nullptr), renWin(nullptr), volumeMapper(nullptr), volume(nullptr), timer(NULL)
+	: ren(nullptr), iren(nullptr), renWin(nullptr), volumeMapper(nullptr), volume(nullptr) /*, timer(NULL)*/
 {
 	errorObserver = ErrorObserver::New();
 	errorObserver->theView = this;
@@ -88,7 +88,6 @@ CVTKView::CVTKView()
 
 	outputWin->AddObserver(vtkCommand::ErrorEvent, errorObserver);
 	outputWin->AddObserver(vtkCommand::WarningEvent, errorObserver);
-
 
 	volumeMapper = vtkGPUVolumeRayCastMapper::New();
 	volume = vtkVolume::New();
@@ -104,7 +103,6 @@ CVTKView::~CVTKView()
 		iren->Delete();
 		renWin->Delete();
 	}
-
 
 	// Delete the objects used to form the visualization.
 
@@ -254,20 +252,20 @@ void CVTKView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 // CDFTView diagnostics
 
 #ifdef _DEBUG
-void CDFTView::AssertValid() const
+void CVTKView::AssertValid() const
 {
 	CView::AssertValid();
 }
 
-void CDFTView::Dump(CDumpContext& dc) const
+void CVTKView::Dump(CDumpContext& dc) const
 {
 	CView::Dump(dc);
 }
 
-CDFTDoc* CDFTView::GetDocument() const // non-debug version is inline
+CNMRIDoc* CVTKView::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDFTDoc)));
-	return dynamic_cast<CDFTDoc*>(m_pDocument);
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CNMRIDoc)));
+	return dynamic_cast<CNMRIDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -320,25 +318,14 @@ void CVTKView::OnInitialUpdate()
 
 	ren->SetBackground(0.1, 0.3, 0.4);
 
-	// camera
-
-	/*
-	ren->GetActiveCamera()->SetFocalPoint(results.realSpaceCell.GetSize().X / 2, results.realSpaceCell.GetSize().Y / 2, results.realSpaceCell.GetSize().Z / 2);
-	ren->GetActiveCamera()->SetPosition(results.realSpaceCell.GetSize().X, results.realSpaceCell.GetSize().Y * 2, results.realSpaceCell.GetSize().Z * 3);
-	*/
-	ren->GetActiveCamera()->ComputeViewPlaneNormal();
-
 	// text
 
 	textActor = vtkSmartPointer<vtkTextActor>::New();
-	textActor->SetInput("Set options then start computing with File|Calculate");
+	textActor->SetInput("Loading...");
 	textActor->SetPosition(10, 10);
 	textActor->GetTextProperty()->SetFontSize(36);
 	textActor->GetTextProperty()->SetColor(0., 1.0, 0.);
 	ren->AddActor2D(textActor);
-
-	//volumeMapper->SetSampleDistance(results.realSpaceCell.GetSize().X / results.realSpaceCell.GetSamples().X / 4);
-	
 
 	volumeMapper->SetBlendModeToComposite();
 	volumeMapper->SetAutoAdjustSampleDistances(0);
@@ -349,7 +336,7 @@ void CVTKView::OnInitialUpdate()
 	colorTransferFunction->SetColorSpaceToRGB();
 	colorTransferFunction->AddRGBPoint(0, 1., 0, 0);
 
-	//colorTransferFunction->AddRGBPoint(results.maxs[1], 1., 0, 0);
+	colorTransferFunction->AddRGBPoint(1., 1., 0, 0);
 
 	volumeProperty->SetColor(colorTransferFunction);
 
@@ -370,7 +357,9 @@ void CVTKView::OnInitialUpdate()
 	iren->Initialize();
 	renWin->SetSize(rect.right - rect.left, rect.bottom - rect.top);
 
-	timer = SetTimer(1, 300, NULL);
+	//timer = SetTimer(1, 300, NULL);
+
+	GrabResultsFromDoc();
 }
 
 bool CVTKView::IsHandledMessage(UINT message)
@@ -387,7 +376,8 @@ LRESULT CVTKView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			LRESULT res  = vtkHandleMessage(GetSafeHwnd(), message, wParam, lParam);
 			//LRESULT res = vtkHandleMessage2(GetSafeHwnd(), message, wParam, lParam, iren);
-			if (message != WM_TIMER || wParam != timer) return res;
+			//if (message != WM_TIMER || wParam != timer) 
+			return res;
 		}
 	}
 
@@ -420,17 +410,15 @@ void CVTKView::Pipeline()
 
 	opacityTransferFunction->AddPoint(0, 0);
 
-	//opacityTransferFunction->AddPoint(results.maxs[i], 1);
+	opacityTransferFunction->AddPoint(1, 1);
 
-
-	if (dataImage) volumeMapper->SetInputData(dataImage);	
+	volumeMapper->SetInputData(dataImage);	
 
 	ren->AddViewProp(volume);
 
 	vtkSmartPointer<vtkCubeSource> cube = vtkSmartPointer<vtkCubeSource>::New();
 	
-	//cube->SetBounds(0, results.realSpaceCell.GetSize().X, 0, results.realSpaceCell.GetSize().Y, 0, results.realSpaceCell.GetSize().Z);
-
+	cube->SetBounds(0, Width, 0, Height, 0, NrFrames);
 
 	vtkSmartPointer<vtkActor> outlineActor = vtkSmartPointer<vtkActor>::New();
 	vtkSmartPointer<vtkPolyDataMapper> outlineMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
@@ -444,8 +432,7 @@ void CVTKView::Pipeline()
 	ren->AddActor(outlineActor);
 
 	textActor = vtkSmartPointer<vtkTextActor>::New();
-	CString str;
-	//str.Format(L"E: %.2f Hartree", results.energies[i]);
+	CString str("Head2D.dat");
 	USES_CONVERSION;
 	textActor->SetInput(W2A(str));
 	textActor->SetPosition(10, 10);
@@ -459,10 +446,10 @@ void CVTKView::OnDestroy()
 {
 	CView::OnDestroy();
 
-	if (timer) KillTimer(timer);
+	//if (timer) KillTimer(timer);
 }
 
-
+/*
 void CVTKView::OnTimer(UINT_PTR nIDEvent)
 {
 	CView::OnTimer(nIDEvent);
@@ -481,6 +468,7 @@ void CVTKView::OnTimer(UINT_PTR nIDEvent)
 		pDoc->UpdateAllViews(NULL);
 	}
 }
+*/
 
 
 
@@ -489,48 +477,47 @@ void CVTKView::GrabResultsFromDoc()
 {
 	CNMRIDoc* pDoc = GetDocument();
 	if (!pDoc) return;
-/*
+
+	if (pDoc->theFile.Width <= 0 || pDoc->theFile.Height <= 0 || pDoc->theFile.NrFrames <= 0) return;
+
+	if (dataImage) dataImage->Delete();
+
+	dataImage = vtkImageData::New();
+
+	Width = static_cast<unsigned int>(pDoc->theFile.Width);
+	Height = static_cast<unsigned int>(pDoc->theFile.Height);
+	NrFrames = static_cast<unsigned int>(pDoc->theFile.NrFrames);
+
+	dataImage->SetDimensions(Width, Height, NrFrames);
+
+	dataImage->SetSpacing(1, 1, 1);
+	dataImage->AllocateScalars(VTK_FLOAT, 1);
+
+	for (unsigned int k = 0; k < NrFrames; ++k)
 	{
-		std::lock_guard<std::mutex> lock(pDoc->resultsMutex);
-		results = pDoc->results;
-		pDoc->results.FreeSomeMemory(); // will never look at it until overwritten by a new computation
+		pDoc->theFile.FFT(k);
+		const std::complex<double>* image = pDoc->theFile.GetRealFrame();
+
+		for (unsigned int i = 0; i < Width; ++i)
+			for (unsigned int j = 0; j < Height; ++j)
+			{
+
+				const double val = std::abs(image[Width * i + j]);
+				dataImage->SetScalarComponentFromDouble(i, j, k, 0, val);
+
+				//if (val > results.maxs[state]) results.maxs[state] = val;
+				//if (val > results.theMax) results.theMax = val;
+			}
 	}
 
-	// force doc displayLevel and so on, it's a new orbitals display
-	pDoc->displayLevel = 0;
-	lastViewOrbital = -1;
-	saveLastViewOrbital = -1;
+	pDoc->theFile.FFT(0);
 
-	// now build the data images
+	//volumeMapper->SetSampleDistance(Width / 4);
 
-	for (unsigned int i = 0; i < dataImage.size(); ++i)
-		dataImage[i]->Delete();
+	// camera
 
+	ren->GetActiveCamera()->SetFocalPoint(Width / 2, Height / 2, NrFrames / 2);
+	ren->GetActiveCamera()->SetPosition(Width, Height * 2, NrFrames * 3);
 
-	dataImage.resize(results.wavefunctions.size());
-	results.maxs.resize(results.wavefunctions.size());
-	for (unsigned int state = 0; state < results.wavefunctions.size(); ++state)
-	{
-		dataImage[state] = vtkImageData::New();
-
-		dataImage[state]->SetSpacing(results.realSpaceCell.GetSize().X/results.realSpaceCell.GetSamples().X, results.realSpaceCell.GetSize().Y/results.realSpaceCell.GetSamples().Y, results.realSpaceCell.GetSize().Z/results.realSpaceCell.GetSamples().Z);
-		dataImage[state]->SetDimensions(results.realSpaceCell.GetSamples().X, results.realSpaceCell.GetSamples().Y, results.realSpaceCell.GetSamples().Z); //number of points in each direction
-
-		dataImage[state]->AllocateScalars(VTK_FLOAT, 1);
-
-		unsigned int index = 0;
-		results.maxs[state] = 0;
-		for (unsigned int i = 0; i < results.realSpaceCell.GetSamples().X; ++i)
-			for (unsigned int j = 0; j < results.realSpaceCell.GetSamples().Y; ++j)
-				for (unsigned int k = 0; k < results.realSpaceCell.GetSamples().Z; ++k)
-				{
-					const double val = std::norm(results.wavefunctions[state](index));
-					dataImage[state]->SetScalarComponentFromDouble(i, j, k, 0, val);
-
-					if (val > results.maxs[state]) results.maxs[state] = val;
-					if (val > results.theMax) results.theMax = val;
-					++index;
-				}
-	}
-	*/
+	ren->GetActiveCamera()->ComputeViewPlaneNormal();
 }
