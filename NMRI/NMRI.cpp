@@ -84,7 +84,7 @@ BOOL CNMRIApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("FreeApp"));
+	SetRegistryKey(_T("NMRI"));
 	LoadStdProfileSettings(0);  // Load standard INI file options (including MRU)
 
 
@@ -109,12 +109,9 @@ BOOL CNMRIApp::InitInstance()
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
 
-
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
-
-
 
 	// Dispatch commands specified on the command line.  Will return FALSE if
 	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.

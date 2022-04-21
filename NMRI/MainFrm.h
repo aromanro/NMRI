@@ -31,6 +31,9 @@ protected:  // control bar embedded members
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
+
+	CSplitterWnd      m_wndSplitter;
+
 public:
 	CPropertiesWnd    m_wndProperties;
 
@@ -41,10 +44,13 @@ protected:
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
+	BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) override;
+
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
+
 public:
 	afx_msg void OnFileOpen();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);

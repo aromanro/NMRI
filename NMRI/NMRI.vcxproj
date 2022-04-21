@@ -76,33 +76,33 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\LIBs\fftw-3.3.5-dll32;$(VC_IncludePath);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)include;$(FrameworkSDKDir)include;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.10240.0\ucrt;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;C:\Program Files (x86)\Microsoft DirectX SDK (August 2007)\Lib\x86;C:\Program Files (x86)\Business Objects\Common\3.5;C:\LIBs\JetVC\Intel;C:\LIBs\boost_1_44_0\stage\lib;C:\Program Files (x86)\Java\jdk1.6.0_20\lib;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\bin;$(VCInstallDir)PlatformSDK\common\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>C:\Program Files (x86)\VTK\include\vtk-8.0;C:\LIBs\fftw-3.3.5-dll32;$(VC_IncludePath);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)include;$(FrameworkSDKDir)include;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.10240.0\ucrt;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\VTK\lib;C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;C:\Program Files (x86)\Microsoft DirectX SDK (August 2007)\Lib\x86;C:\Program Files (x86)\Business Objects\Common\3.5;C:\LIBs\JetVC\Intel;C:\LIBs\boost_1_44_0\stage\lib;C:\Program Files (x86)\Java\jdk1.6.0_20\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Program Files (x86)\VTK\bin;C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\bin;$(VCInstallDir)PlatformSDK\common\bin;$(ExecutablePath)</ExecutablePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>true</EnableCppCoreCheck>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\lib\amd64;$(VSInstallDir)SDK\v2.0\lib\amd64;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>C:\Program Files\VTK\include\vtk-8.0;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\VTK\lib;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\lib\amd64;$(VSInstallDir)SDK\v2.0\lib\amd64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Program Files\VTK\bin;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\bin;$(ExecutablePath)</ExecutablePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>true</EnableCppCoreCheck>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\LIBs\fftw-3.3.5-dll32;$(VC_IncludePath);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)include;$(FrameworkSDKDir)include;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.10240.0\ucrt;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;C:\Program Files (x86)\Microsoft DirectX SDK (August 2007)\Lib\x86;C:\Program Files (x86)\Business Objects\Common\3.5;C:\LIBs\JetVC\Intel;C:\LIBs\boost_1_44_0\stage\lib;C:\Program Files (x86)\Java\jdk1.6.0_20\lib;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\bin;$(VCInstallDir)PlatformSDK\common\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>C:\Program Files (x86)\VTK\include\vtk-8.0;C:\LIBs\fftw-3.3.5-dll32;$(VC_IncludePath);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)include;$(FrameworkSDKDir)include;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.10240.0\ucrt;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\VTK\lib;C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;C:\Program Files (x86)\Microsoft DirectX SDK (August 2007)\Lib\x86;C:\Program Files (x86)\Business Objects\Common\3.5;C:\LIBs\JetVC\Intel;C:\LIBs\boost_1_44_0\stage\lib;C:\Program Files (x86)\Java\jdk1.6.0_20\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Program Files (x86)\VTK\bin;C:\LIBs\fftw-3.3.5-dll32;$(VCInstallDir)PlatformSDK\bin;$(VCInstallDir)PlatformSDK\common\bin;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\lib\amd64;$(VSInstallDir)SDK\v2.0\lib\amd64;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>C:\Program Files\VTK\include\vtk-8.0;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\VTK\lib;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\lib\amd64;$(VSInstallDir)SDK\v2.0\lib\amd64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>C:\Program Files\VTK\bin;C:\LIBs\fftw-3.3.5-dll64;$(VCInstallDir)PlatformSDK\bin;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,7 +116,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>libfftw3-3.lib</AdditionalDependencies>
+      <AdditionalDependencies>libfftw3-3.lib;vtkCommonCore-8.0.lib;vtkRenderingCore-8.0.lib;vtkViewsCore-8.0.lib;vtkFiltersCore-8.0.lib;vtkCommonDataModel-8.0.lib;vtkFiltersGeneral-8.0.lib;vtkFiltersGeometry-8.0.lib;vtkRenderingOpenGL2-8.0.lib;vtkCommonExecutionModel-8.0.lib;vtkRenderingAnnotation-8.0.lib;vtkRenderingContextOpenGL2-8.0.lib;vtkRenderingVolumeOpenGL2-8.0.lib;vtkInteractionStyle-8.0.lib;vtkRenderingFreeType-8.0.lib;vtkRenderingVolume-8.0.lib;vtkFiltersModeling-8.0.lib;vtkFiltersSources-8.0.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -141,7 +141,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>libfftw3-3.lib</AdditionalDependencies>
+      <AdditionalDependencies>libfftw3-3.lib;vtkCommonCore-8.0.lib;vtkRenderingCore-8.0.lib;vtkViewsCore-8.0.lib;vtkFiltersCore-8.0.lib;vtkCommonDataModel-8.0.lib;vtkFiltersGeneral-8.0.lib;vtkFiltersGeometry-8.0.lib;vtkRenderingOpenGL2-8.0.lib;vtkCommonExecutionModel-8.0.lib;vtkRenderingAnnotation-8.0.lib;vtkRenderingContextOpenGL2-8.0.lib;vtkRenderingVolumeOpenGL2-8.0.lib;vtkInteractionStyle-8.0.lib;vtkRenderingFreeType-8.0.lib;vtkRenderingVolume-8.0.lib;vtkFiltersModeling-8.0.lib;vtkFiltersSources-8.0.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -169,7 +169,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libfftw3-3.lib</AdditionalDependencies>
+      <AdditionalDependencies>libfftw3-3.lib;vtkCommonCore-8.0.lib;vtkRenderingCore-8.0.lib;vtkViewsCore-8.0.lib;vtkFiltersCore-8.0.lib;vtkCommonDataModel-8.0.lib;vtkFiltersGeneral-8.0.lib;vtkFiltersGeometry-8.0.lib;vtkRenderingOpenGL2-8.0.lib;vtkCommonExecutionModel-8.0.lib;vtkRenderingAnnotation-8.0.lib;vtkRenderingContextOpenGL2-8.0.lib;vtkRenderingVolumeOpenGL2-8.0.lib;vtkInteractionStyle-8.0.lib;vtkRenderingFreeType-8.0.lib;vtkRenderingVolume-8.0.lib;vtkFiltersModeling-8.0.lib;vtkFiltersSources-8.0.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -197,7 +197,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libfftw3-3.lib</AdditionalDependencies>
+      <AdditionalDependencies>libfftw3-3.lib;vtkCommonCore-8.0.lib;vtkRenderingCore-8.0.lib;vtkViewsCore-8.0.lib;vtkFiltersCore-8.0.lib;vtkCommonDataModel-8.0.lib;vtkFiltersGeneral-8.0.lib;vtkFiltersGeometry-8.0.lib;vtkRenderingOpenGL2-8.0.lib;vtkCommonExecutionModel-8.0.lib;vtkRenderingAnnotation-8.0.lib;vtkRenderingContextOpenGL2-8.0.lib;vtkRenderingVolumeOpenGL2-8.0.lib;vtkInteractionStyle-8.0.lib;vtkRenderingFreeType-8.0.lib;vtkRenderingVolume-8.0.lib;vtkFiltersModeling-8.0.lib;vtkFiltersSources-8.0.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -225,6 +225,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VTKView.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FFT.cpp" />
@@ -241,6 +242,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="VTKView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NMRI.rc" />

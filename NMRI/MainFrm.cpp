@@ -7,6 +7,8 @@
 
 #include "MainFrm.h"
 #include "NMRIDoc.h"
+#include "NMRIView.h"
+#include "VTKView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -167,6 +169,12 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 	return TRUE;
 }
+
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/, CCreateContext* pContext)
+{
+	return static_cast<BOOL>(static_cast<bool>(m_wndSplitter.CreateStatic(this, 1, 2)) && m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CNMRIView), CSize(1100, 128), pContext) && m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CVTKView), CSize(128, 128), pContext));
+}
+
 
 BOOL CMainFrame::CreateDockingWindows()
 {
