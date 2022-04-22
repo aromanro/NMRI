@@ -20,6 +20,10 @@ public:
 
 	bool animate;
 
+	bool colorFunction = true;
+	bool opacityFunction = true;
+	bool gradientFunction = true;
+
 // Operations
 public:
 // Overrides
@@ -40,6 +44,7 @@ public:
 #endif
 
 	void UpdateViews();
+	void Update3DOptions();
 
 protected:
 // Generated message map functions

@@ -43,6 +43,8 @@
 #include <vtkWin32OutputWindow.h>
 #include <vtkCommand.h>
 
+#include <vtkLight.h>
+
 
 #ifdef _DEBUG
 #undef new
@@ -122,6 +124,7 @@ public:
 // Overrides
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -162,6 +165,8 @@ public:
 	afx_msg void OnDestroy();
 	//afx_msg void OnTimer(UINT_PTR nIDEvent);
 	void GrabResultsFromDoc();
+
+	void UpdateTransferFunctions();
 };
 
 #ifndef _DEBUG  // debug version in DFTView.cpp

@@ -86,18 +86,34 @@ void CPropertiesWnd::InitPropList()
 	m_wndPropList.SetVSDotNetLook();
 	m_wndPropList.MarkModifiedProperties();
 
-	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Appearance"));
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Filter"));
 
-	CMFCPropertyGridProperty *prop = new CMFCPropertyGridProperty(_T("Filter Low Frequencies"), (_variant_t)false, _T("Removes the low frequency information"));
+	CMFCPropertyGridProperty *prop = new CMFCPropertyGridProperty(_T("Low Frequencies"), (_variant_t)false, _T("Removes the low frequency information"));
 
 	prop->SetData(0);
 	pGroup1->AddSubItem(prop);
 
-	prop = new CMFCPropertyGridProperty(_T("Filter High Frequencies"), (_variant_t)false, _T("Removes the high frequency information"));
+	prop = new CMFCPropertyGridProperty(_T("High Frequencies"), (_variant_t)false, _T("Removes the high frequency information"));
 	prop->SetData(1);
 	pGroup1->AddSubItem(prop);
 
 	m_wndPropList.AddProperty(pGroup1);
+
+	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("3D View"));
+
+	prop = new CMFCPropertyGridProperty(_T("Color transfer function"), (_variant_t)true, _T("Color the 3D image with blue for low values, red for high"));
+	prop->SetData(2);
+	pGroup2->AddSubItem(prop);
+
+	prop = new CMFCPropertyGridProperty(_T("Scalar opacity transfer function"), (_variant_t)true, _T("Make the small values more transparent than the big ones"));
+	prop->SetData(3);
+	pGroup2->AddSubItem(prop);
+
+	prop = new CMFCPropertyGridProperty(_T("Gradient opacity transfer function"), (_variant_t)true, _T("Make the low gradient values more transparent"));
+	prop->SetData(4);
+	pGroup2->AddSubItem(prop);
+
+	m_wndPropList.AddProperty(pGroup2);
 }
 
 void CPropertiesWnd::OnSetFocus(CWnd* pOldWnd)
@@ -124,7 +140,8 @@ LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lp
 
 		 v.ChangeType(VT_BOOL);
 
-		 switch (prop->GetData())
+		 const auto opt = prop->GetData();
+		 switch (opt)
 		 {
 			case 0:
 				theDoc->theFile.filterLowFreqs = v.boolVal;
@@ -132,9 +149,21 @@ LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lp
 			case 1:
 				theDoc->theFile.filterHighFreqs = v.boolVal;
 				break;
+			case 2:
+				theDoc->colorFunction = v.boolVal;
+				break;
+			case 3:
+				theDoc->opacityFunction = v.boolVal;
+				break;
+			case 4:
+				theDoc->gradientFunction = v.boolVal;
+				break;
 		 }
 
-		 theDoc->UpdateViews();
+		 if (opt <= 1)
+			 theDoc->UpdateViews();
+		 else
+			 theDoc->Update3DOptions();
 	 }
 
 	 return 0;

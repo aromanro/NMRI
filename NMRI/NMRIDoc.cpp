@@ -174,3 +174,19 @@ void CNMRIDoc::UpdateViews()
 		}
 	}
 }
+
+
+void CNMRIDoc::Update3DOptions()
+{
+	POSITION pos = GetFirstViewPosition();
+	while (pos != NULL) {
+		CView* pView = GetNextView(pos);
+
+		// the other one refreshes itself by timer
+		if (pView->IsKindOf(RUNTIME_CLASS(CVTKView)))
+		{
+			((CVTKView*)pView)->UpdateTransferFunctions();
+			((CVTKView*)pView)->Invalidate();
+		}
+	}
+}

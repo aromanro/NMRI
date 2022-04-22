@@ -332,32 +332,10 @@ void CVTKView::OnInitialUpdate()
 
 	vtkVolumeProperty* volumeProperty = volume->GetProperty();
 
-	vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
-	opacityTransferFunction->AddPoint(0.0, 0);
-	opacityTransferFunction->AddPoint(1., 0.2);
-
-	volumeProperty->SetScalarOpacity(opacityTransferFunction);
-	volumeProperty->SetScalarOpacityUnitDistance(1);
-
-	vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
-	colorTransferFunction->SetColorSpaceToRGB();
-	
-	colorTransferFunction->AddRGBPoint(0, 0., 0., 1.);
-	colorTransferFunction->AddRGBPoint(1., 1., 0, 0);
-
-	volumeProperty->SetColor(colorTransferFunction);
-
-	vtkSmartPointer<vtkPiecewiseFunction> gradientTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
-	gradientTransferFunction->AddPoint(0.0, 0);
-	gradientTransferFunction->AddPoint(0.1, 0.1);
-	gradientTransferFunction->AddPoint(0.3, 0.5);
-	gradientTransferFunction->AddPoint(1, 1);
-	volumeProperty->SetGradientOpacity(gradientTransferFunction);
-
 	/*
 	volumeProperty->ShadeOn();
 	volumeProperty->SetDiffuse(0.7);
-	volumeProperty->SetAmbient(0.01);
+	volumeProperty->SetAmbient(0.2);
 	volumeProperty->SetSpecular(0.5);
 	volumeProperty->SetSpecularPower(70);
 	*/
@@ -365,8 +343,9 @@ void CVTKView::OnInitialUpdate()
 	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationTypeToLinear();
 
-	volume->SetMapper(volumeMapper);
+	UpdateTransferFunctions();
 
+	volume->SetMapper(volumeMapper);
 	ren->AddViewProp(volume);
 
 	// initialize the interactor
@@ -379,12 +358,75 @@ void CVTKView::OnInitialUpdate()
 
 	GrabResultsFromDoc();
 
+	// light
+	/*
+	vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
+	light->SetColor(1, 1, 1);
+	light->SetIntensity(1);
+	light->SetFocalPoint(Width / 2, Height / 2, NrFrames * 4 / 2);
+	light->SetPosition(25, 25, 100);
+	ren->AddLight(light);
+	*/
+
 	// camera
 	ren->GetActiveCamera()->SetFocalPoint(Width / 2, Height / 2, NrFrames * 4 / 2);
 	ren->GetActiveCamera()->SetPosition(Width, Height * 2, NrFrames * 4 * 3);
 
-	ren->GetActiveCamera()->ComputeViewPlaneNormal();
+	//ren->GetActiveCamera()->ComputeViewPlaneNormal();
 }
+
+void CVTKView::UpdateTransferFunctions()
+{
+	const CNMRIDoc* pDoc = GetDocument();
+
+	vtkVolumeProperty* volumeProperty = volume->GetProperty();
+
+	if (!pDoc || pDoc->colorFunction)
+	{
+		vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction = vtkSmartPointer<vtkColorTransferFunction>::New();
+		colorTransferFunction->SetColorSpaceToRGB();
+		colorTransferFunction->AddRGBPoint(0, 0., 0., 1.);
+		colorTransferFunction->AddRGBPoint(1., 1., 0, 0);
+		volumeProperty->SetColor(colorTransferFunction);
+	}
+	else
+	{
+		vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction;
+		volumeProperty->SetColor(colorTransferFunction);
+	}
+
+
+	if (!pDoc || pDoc->opacityFunction)
+	{
+		vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
+		opacityTransferFunction->AddPoint(0.0, 0);
+		opacityTransferFunction->AddPoint(1., 1);
+		volumeProperty->SetScalarOpacity(opacityTransferFunction);
+		if (!pDoc || pDoc->gradientFunction) volumeProperty->SetScalarOpacityUnitDistance(4);
+		else volumeProperty->SetScalarOpacityUnitDistance(16);
+	}
+	else
+	{
+		vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction;
+		volumeProperty->SetScalarOpacity(opacityTransferFunction);
+		volumeProperty->SetScalarOpacityUnitDistance(1);
+	}
+
+	if (!pDoc || pDoc->gradientFunction)
+	{
+		vtkSmartPointer<vtkPiecewiseFunction> gradientTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
+		gradientTransferFunction->AddPoint(0.0, 0);
+		//gradientTransferFunction->AddPoint(0.4, 0.2);
+		gradientTransferFunction->AddPoint(1, 1);
+		volumeProperty->SetGradientOpacity(gradientTransferFunction);
+	}
+	else
+	{
+		vtkSmartPointer<vtkPiecewiseFunction> gradientTransferFunction;
+		volumeProperty->SetGradientOpacity(gradientTransferFunction);
+	}
+}
+
 
 bool CVTKView::IsHandledMessage(UINT message)
 {
