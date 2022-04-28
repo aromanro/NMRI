@@ -23,6 +23,8 @@ public:
 	bool colorFunction = true;
 	bool opacityFunction = true;
 	bool gradientFunction = true;
+	int opacityVal = 50;
+	int gradientVal = 50;
 
 // Operations
 public:

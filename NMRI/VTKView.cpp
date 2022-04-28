@@ -398,25 +398,29 @@ void CVTKView::UpdateTransferFunctions()
 
 	if (!pDoc || pDoc->opacityFunction)
 	{
+		double distance = 1;
+		if (!pDoc || pDoc->gradientFunction) distance = 4;
+		else distance = 64. * pDoc->opacityVal / 100.;
+
+		volumeProperty->SetScalarOpacityUnitDistance(distance);
+
 		vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
 		opacityTransferFunction->AddPoint(0.0, 0);
-		opacityTransferFunction->AddPoint(1., 1);
+		opacityTransferFunction->AddPoint(1, 1);
 		volumeProperty->SetScalarOpacity(opacityTransferFunction);
-		if (!pDoc || pDoc->gradientFunction) volumeProperty->SetScalarOpacityUnitDistance(4);
-		else volumeProperty->SetScalarOpacityUnitDistance(16);
 	}
 	else
 	{
+		volumeProperty->SetScalarOpacityUnitDistance(1);
 		vtkSmartPointer<vtkPiecewiseFunction> opacityTransferFunction;
 		volumeProperty->SetScalarOpacity(opacityTransferFunction);
-		volumeProperty->SetScalarOpacityUnitDistance(1);
 	}
 
 	if (!pDoc || pDoc->gradientFunction)
 	{
 		vtkSmartPointer<vtkPiecewiseFunction> gradientTransferFunction = vtkSmartPointer<vtkPiecewiseFunction>::New();
 		gradientTransferFunction->AddPoint(0.0, 0);
-		//gradientTransferFunction->AddPoint(0.4, 0.2);
+		if (pDoc) gradientTransferFunction->AddPoint(pDoc->gradientVal / 100., 1);
 		gradientTransferFunction->AddPoint(1, 1);
 		volumeProperty->SetGradientOpacity(gradientTransferFunction);
 	}

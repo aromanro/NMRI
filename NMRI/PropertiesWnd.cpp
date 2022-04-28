@@ -14,6 +14,85 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// for CSliderProp and CPropSliderCtrl see: https://github.com/jhlee8804/MFC-Feature-Pack/tree/master/NewControls
+// the code is adjusted to allow setting the range
+
+/////////////////////////////////////////////////////////////////////////////
+// CPropSliderCtrl
+
+CPropSliderCtrl::CPropSliderCtrl(CSliderProp* pProp, COLORREF clrBack) {
+	m_clrBack = clrBack;
+	m_brBackground.CreateSolidBrush(m_clrBack);
+	m_pProp = pProp;
+}
+
+CPropSliderCtrl::~CPropSliderCtrl() {
+}
+
+BEGIN_MESSAGE_MAP(CPropSliderCtrl, CSliderCtrl)
+	//{{AFX_MSG_MAP(CPropSliderCtrl)
+	ON_WM_CTLCOLOR_REFLECT()
+	ON_WM_HSCROLL_REFLECT()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CPropSliderCtrl message handlers
+
+HBRUSH CPropSliderCtrl::CtlColor(CDC* pDC, UINT /*nCtlColor*/) {
+	pDC->SetBkColor(m_clrBack);
+	return m_brBackground;
+}
+
+void CPropSliderCtrl::HScroll(UINT /*nSBCode*/, UINT /*nPos*/) {
+	ASSERT_VALID(m_pProp);
+
+	m_pProp->OnUpdateValue();
+	m_pProp->Redraw();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// CSliderProp class
+
+CSliderProp::CSliderProp(const CString& strName, long nValue, long minVal, long maxVal, LPCTSTR lpszDescr, DWORD dwData) :
+	CMFCPropertyGridProperty(strName, nValue, lpszDescr, dwData), m_minVal(minVal), m_maxVal(maxVal)
+{
+}
+
+CWnd* CSliderProp::CreateInPlaceEdit(CRect rectEdit, BOOL& bDefaultFormat) {
+	CPropSliderCtrl* pWndSlider = new CPropSliderCtrl(this, m_pWndList->GetBkColor());
+
+	rectEdit.left += rectEdit.Height() + 5;
+
+	pWndSlider->Create(WS_VISIBLE | WS_CHILD, rectEdit, m_pWndList, AFX_PROPLIST_ID_INPLACE);
+	pWndSlider->SetRange(m_minVal, m_maxVal);
+	pWndSlider->SetPos(m_varValue.lVal);
+
+	bDefaultFormat = TRUE;
+	return pWndSlider;
+}
+
+BOOL CSliderProp::OnUpdateValue() {
+	ASSERT_VALID(this);
+	ASSERT_VALID(m_pWndInPlace);
+	ASSERT_VALID(m_pWndList);
+	ASSERT(::IsWindow(m_pWndInPlace->GetSafeHwnd()));
+
+	long lCurrValue = m_varValue.lVal;
+
+	CSliderCtrl* pSlider = (CSliderCtrl*)m_pWndInPlace;
+
+	m_varValue = (long)pSlider->GetPos();
+
+	if (lCurrValue != m_varValue.lVal) {
+		m_pWndList->OnPropertyChanged(this);
+	}
+
+	return TRUE;
+}
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 // CResourceViewBar
 
@@ -113,6 +192,14 @@ void CPropertiesWnd::InitPropList()
 	prop->SetData(4);
 	pGroup2->AddSubItem(prop);
 
+	prop = new CSliderProp(_T("Opacity point"), 50, 0, 100, _T("Opacity point where the value is 1"));
+	prop->SetData(5);
+	pGroup2->AddSubItem(prop);
+
+	prop = new CSliderProp(_T("Gradient point"), 50, 0, 100, _T("Gradient point where the value is 1"));
+	prop->SetData(6);
+	pGroup2->AddSubItem(prop);
+
 	m_wndPropList.AddProperty(pGroup2);
 }
 
@@ -138,25 +225,36 @@ LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lp
 	 {
 		 COleVariant v = prop->GetValue();
 
-		 v.ChangeType(VT_BOOL);
-
 		 const auto opt = prop->GetData();
 		 switch (opt)
 		 {
 			case 0:
+				v.ChangeType(VT_BOOL);
 				theDoc->theFile.filterLowFreqs = v.boolVal;
 				break;
 			case 1:
+				v.ChangeType(VT_BOOL);
 				theDoc->theFile.filterHighFreqs = v.boolVal;
 				break;
 			case 2:
+				v.ChangeType(VT_BOOL);
 				theDoc->colorFunction = v.boolVal;
 				break;
 			case 3:
+				v.ChangeType(VT_BOOL);
 				theDoc->opacityFunction = v.boolVal;
 				break;
 			case 4:
+				v.ChangeType(VT_BOOL);
 				theDoc->gradientFunction = v.boolVal;
+				break;
+			case 5:
+				v.ChangeType(VT_INT);
+				theDoc->opacityVal = v.intVal;
+				break;
+			case 6:
+				v.ChangeType(VT_INT);
+				theDoc->gradientVal = v.intVal;
 				break;
 		 }
 
