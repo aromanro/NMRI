@@ -17,6 +17,9 @@ public:
 	int Width;
 	int Height;
 
+	int LowPassPercentage = 50;
+	int HighPassPercentage = 50;
+
 	bool Load(const CString& name);
 
 	void FFT(int frame)
@@ -68,16 +71,16 @@ protected:
 		const double xCenter = Width / 2.;
 		const double yCenter = Height / 2.;
 
-		const double xLowPass = Width / 32.;
-		const double yLowPass = Height / 32.;
+		const double xLowPass = Width / 32. * LowPassPercentage / 100.;
+		const double yLowPass = Height / 32. * LowPassPercentage / 100.;
 
 		const double xLowLowLimit = xCenter - xLowPass;
 		const double xHighLowLimit = xCenter + xLowPass;
 		const double yLowLowLimit = yCenter - yLowPass;
 		const double yHighLowLimit = yCenter + yLowPass;
 
-		const double xHighPass = Width / 16.;
-		const double yHighPass = Height / 16.;
+		const double xHighPass = Width / 4. * (2. - HighPassPercentage / 100.);
+		const double yHighPass = Height / 4. * (2. - HighPassPercentage / 100.);
 
 
 		const double xLowHighLimit = xCenter - xHighPass;

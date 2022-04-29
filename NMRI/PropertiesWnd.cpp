@@ -176,28 +176,37 @@ void CPropertiesWnd::InitPropList()
 	prop->SetData(1);
 	pGroup1->AddSubItem(prop);
 
+	prop = new CSliderProp(_T("Low filter threshold"), 50, 0, 100, _T("Low filter cutoff value"));
+	prop->SetData(2);
+	pGroup1->AddSubItem(prop);
+
+	prop = new CSliderProp(_T("High filter threshold"), 50, 0, 100, _T("High filter cutoff value"));
+	prop->SetData(3);
+	pGroup1->AddSubItem(prop);
+
+
 	m_wndPropList.AddProperty(pGroup1);
 
 	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("3D View"));
 
 	prop = new CMFCPropertyGridProperty(_T("Color transfer function"), (_variant_t)true, _T("Color the 3D image with blue for low values, red for high"));
-	prop->SetData(2);
-	pGroup2->AddSubItem(prop);
-
-	prop = new CMFCPropertyGridProperty(_T("Scalar opacity transfer function"), (_variant_t)true, _T("Make the small values more transparent than the big ones"));
-	prop->SetData(3);
-	pGroup2->AddSubItem(prop);
-
-	prop = new CMFCPropertyGridProperty(_T("Gradient opacity transfer function"), (_variant_t)true, _T("Make the low gradient values more transparent"));
 	prop->SetData(4);
 	pGroup2->AddSubItem(prop);
 
-	prop = new CSliderProp(_T("Opacity point"), 50, 0, 100, _T("Opacity point where the value is 1"));
+	prop = new CMFCPropertyGridProperty(_T("Scalar opacity transfer function"), (_variant_t)true, _T("Make the small values more transparent than the big ones"));
 	prop->SetData(5);
 	pGroup2->AddSubItem(prop);
 
-	prop = new CSliderProp(_T("Gradient point"), 50, 0, 100, _T("Gradient point where the value is 1"));
+	prop = new CMFCPropertyGridProperty(_T("Gradient opacity transfer function"), (_variant_t)true, _T("Make the low gradient values more transparent"));
 	prop->SetData(6);
+	pGroup2->AddSubItem(prop);
+
+	prop = new CSliderProp(_T("Opacity depth"), 50, 0, 100, _T("Opacity depth where the value is 1"));
+	prop->SetData(7);
+	pGroup2->AddSubItem(prop);
+
+	prop = new CSliderProp(_T("Gradient point"), 50, 0, 100, _T("Gradient point where the value is 1"));
+	prop->SetData(8);
 	pGroup2->AddSubItem(prop);
 
 	m_wndPropList.AddProperty(pGroup2);
@@ -237,28 +246,36 @@ LRESULT CPropertiesWnd::OnPropertyChanged(__in WPARAM /*wparam*/, __in LPARAM lp
 				theDoc->theFile.filterHighFreqs = v.boolVal;
 				break;
 			case 2:
-				v.ChangeType(VT_BOOL);
-				theDoc->colorFunction = v.boolVal;
+				v.ChangeType(VT_INT);
+				theDoc->theFile.LowPassPercentage = v.intVal;
 				break;
 			case 3:
-				v.ChangeType(VT_BOOL);
-				theDoc->opacityFunction = v.boolVal;
+				v.ChangeType(VT_INT);
+				theDoc->theFile.HighPassPercentage = v.intVal;
 				break;
 			case 4:
 				v.ChangeType(VT_BOOL);
-				theDoc->gradientFunction = v.boolVal;
+				theDoc->colorFunction = v.boolVal;
 				break;
 			case 5:
+				v.ChangeType(VT_BOOL);
+				theDoc->opacityFunction = v.boolVal;
+				break;
+			case 6:
+				v.ChangeType(VT_BOOL);
+				theDoc->gradientFunction = v.boolVal;
+				break;
+			case 7:
 				v.ChangeType(VT_INT);
 				theDoc->opacityVal = v.intVal;
 				break;
-			case 6:
+			case 8:
 				v.ChangeType(VT_INT);
 				theDoc->gradientVal = v.intVal;
 				break;
 		 }
 
-		 if (opt <= 1)
+		 if (opt <= 3)
 			 theDoc->UpdateViews();
 		 else
 			 theDoc->Update3DOptions();
