@@ -1,6 +1,7 @@
 # NMRI
 2D Fourier Transform of Nuclear Magnetic Resonance Imaging raw data
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9249fa3267d84c819fc48af840b73392)](https://app.codacy.com/gh/aromanro/NMRI?utm_source=github.com&utm_medium=referral&utm_content=aromanro/NMRI&utm_campaign=Badge_Grade_Settings)
 [![CodeFactor](https://www.codefactor.io/repository/github/aromanro/nmri/badge)](https://www.codefactor.io/repository/github/aromanro/nmri)
 
 Description on https://compphys.go.ro/nuclear-magnetic-resonance-and-fourier-transform/
