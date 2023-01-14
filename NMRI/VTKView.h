@@ -10,7 +10,7 @@
 #endif
 
 #include <vtkFixedPointVolumeRayCastMapper.h>
-#include <vtkVolumeRayCastCompositeFunction.h>
+//#include <vtkVolumeRayCastCompositeFunction.h>
 #include <vtkVolumeProperty.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
