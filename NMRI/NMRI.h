@@ -19,18 +19,16 @@ class CNMRIApp : public CWinAppEx
 public:
 	CNMRIApp();
 
-
-// Overrides
-public:
-	virtual BOOL InitInstance();
-
 // Implementation
 	UINT  m_nAppLook;
 	BOOL  m_bHiColorIcons;
 
-	virtual void PreLoadState();
-	virtual void LoadCustomState();
-	virtual void SaveCustomState();
+private:
+	// Overrides
+	BOOL InitInstance() override;
+	void PreLoadState() override;
+	void LoadCustomState() override;
+	void SaveCustomState() override;
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()

@@ -26,9 +26,6 @@ CPropSliderCtrl::CPropSliderCtrl(CSliderProp* pProp, COLORREF clrBack) {
 	m_pProp = pProp;
 }
 
-CPropSliderCtrl::~CPropSliderCtrl() {
-}
-
 BEGIN_MESSAGE_MAP(CPropSliderCtrl, CSliderCtrl)
 	//{{AFX_MSG_MAP(CPropSliderCtrl)
 	ON_WM_CTLCOLOR_REFLECT()
@@ -96,14 +93,6 @@ BOOL CSliderProp::OnUpdateValue() {
 /////////////////////////////////////////////////////////////////////////////
 // CResourceViewBar
 
-CPropertiesWnd::CPropertiesWnd()
-	: theDoc(nullptr)
-{
-}
-
-CPropertiesWnd::~CPropertiesWnd()
-{
-}
 
 BEGIN_MESSAGE_MAP(CPropertiesWnd, CDockablePane)
 	ON_WM_CREATE()
@@ -118,7 +107,7 @@ END_MESSAGE_MAP()
 
 void CPropertiesWnd::AdjustLayout()
 {
-	if (GetSafeHwnd () == NULL || (AfxGetMainWnd() != NULL && AfxGetMainWnd()->IsIconic()))
+	if (GetSafeHwnd () == nullptr || (AfxGetMainWnd() != nullptr && AfxGetMainWnd()->IsIconic()))
 	{
 		return;
 	}
@@ -126,7 +115,7 @@ void CPropertiesWnd::AdjustLayout()
 	CRect rectClient;
 	GetClientRect(rectClient);
 
-	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), rectClient.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndPropList.SetWindowPos(nullptr, rectClient.left, rectClient.top, rectClient.Width(), rectClient.Height(), SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)

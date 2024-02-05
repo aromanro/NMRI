@@ -5,12 +5,6 @@
 #include <utility>
 #include <cassert>
 
-MemoryBitmap::MemoryBitmap()
-	: m_width(0), m_height(0), data(nullptr)
-{
-}
-
-
 MemoryBitmap::MemoryBitmap(const MemoryBitmap& other) // copy constructor
 {
 	if (other.data)
@@ -133,7 +127,7 @@ void MemoryBitmap::SetMatrix(const std::complex<double>* results, int Width, int
 	}
 }
 
-void MemoryBitmap::Draw(CDC* pDC)
+void MemoryBitmap::Draw(CDC* pDC) const
 {
 	BITMAPINFO bmi;
 	ZeroMemory(&bmi, sizeof(BITMAPINFOHEADER));
@@ -156,7 +150,7 @@ void MemoryBitmap::Draw(CDC* pDC)
 	dcMemory.SelectObject(pOldBitmap);
 }
 
-void MemoryBitmap::Draw(CDC* pDC, CRect& rect, int origWidth, int origHeight)
+void MemoryBitmap::Draw(CDC* pDC, CRect& rect, int origWidth, int origHeight) const
 {
 	BITMAPINFO bmi;
 	ZeroMemory(&bmi, sizeof(BITMAPINFOHEADER));

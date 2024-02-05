@@ -76,10 +76,9 @@ END_MESSAGE_MAP()
 // CDFTView construction/destruction
 
 CVTKView::CVTKView()
-	: ren(nullptr), iren(nullptr), renWin(nullptr), volumeMapper(nullptr), volume(nullptr)
 {
 	errorObserver = ErrorObserver::New();
-	errorObserver->theView = this;
+	errorObserver->SetView(this);
 
 	// avoid displaying VTK warning window and log the messages instead
 	vtkSmartPointer<vtkFileOutputWindow> outputWin = vtkSmartPointer<vtkFileOutputWindow>::New();
@@ -166,7 +165,7 @@ void CVTKView::OnDraw(CDC* pDC)
 		renWin->SetUseOffScreenBuffers(true);
 		renWin->Render();
 
-		const unsigned char *pixels = renWin->GetPixelData(0, 0, cxWindow - 1, cyWindow - 1, 0, NULL);
+		const unsigned char *pixels = renWin->GetPixelData(0, 0, cxWindow - 1, cyWindow - 1, 0, 0);
 		
 		int dataWidth = ((cxWindow * 3 + 3) / 4) * 4;
 
@@ -183,9 +182,9 @@ void CVTKView::OnDraw(CDC* pDC)
 		MemoryDataHeader.bmiHeader.biXPelsPerMeter = 10000;
 		MemoryDataHeader.bmiHeader.biYPelsPerMeter = 10000;
 
-		unsigned char *MemoryData = NULL;
+		unsigned char *MemoryData = nullptr;
 		HDC MemoryHdc = static_cast<HDC>(CreateCompatibleDC(pDC->GetSafeHdc()));
-		HBITMAP dib = CreateDIBSection(MemoryHdc, &MemoryDataHeader, DIB_RGB_COLORS, (void **)(&MemoryData), NULL, 0);
+		HBITMAP dib = CreateDIBSection(MemoryHdc, &MemoryDataHeader, DIB_RGB_COLORS, (void **)(&MemoryData), nullptr, 0);
 		if (dib)
 		{
 			// copy the pixels over
@@ -461,7 +460,7 @@ void CVTKView::RecoverFromWarning()
 
 	// do something to recover, if needed
 
-	pDoc->UpdateAllViews(NULL);
+	pDoc->UpdateAllViews(nullptr);
 }
 
 void CVTKView::Pipeline()

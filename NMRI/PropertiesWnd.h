@@ -10,13 +10,13 @@ class CNMRIDoc;
 class CSliderProp : public CMFCPropertyGridProperty
 {
 public:
-	CSliderProp(const CString& strName, long nValue, long minVal = 0, long maxVal = 100, LPCTSTR lpszDescr = NULL, DWORD dwData = 0);
+	CSliderProp(const CString& strName, long nValue, long minVal = 0, long maxVal = 100, LPCTSTR lpszDescr = nullptr, DWORD dwData = 0);
 
-	virtual BOOL OnUpdateValue();
+	BOOL OnUpdateValue() override;
 
-protected:
-	virtual CWnd* CreateInPlaceEdit(CRect rectEdit, BOOL& bDefaultFormat);
-	virtual BOOL OnSetCursor() const { return FALSE; /* Use default */ }
+private:
+	CWnd* CreateInPlaceEdit(CRect rectEdit, BOOL& bDefaultFormat) override;
+	BOOL OnSetCursor() const  override { return FALSE; /* Use default */ }
 
 	long m_minVal;
 	long m_maxVal;
@@ -32,16 +32,13 @@ public:
 	CPropSliderCtrl(CSliderProp* pProp, COLORREF clrBack);
 
 	// Attributes
-protected:
+private:
 	CBrush m_brBackground;
 	COLORREF m_clrBack;
 	CSliderProp* m_pProp;
 
 	// Implementation
-public:
-	virtual ~CPropSliderCtrl();
 
-protected:
 	//{{AFX_MSG(CPropSliderCtrl)
 	afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
 	//}}AFX_MSG
@@ -55,40 +52,29 @@ class CPropertiesWnd : public CDockablePane
 {
 // Construction
 public:
-	CPropertiesWnd();
-
-	void AdjustLayout();
+	void AdjustLayout() override;
 
 // Attributes
-public:
 	void SetVSDotNetLook(BOOL bSet)
 	{
 		m_wndPropList.SetVSDotNetLook(bSet);
 		m_wndPropList.SetGroupNameFullWidth(bSet);
 	}
 
+	CNMRIDoc* theDoc = nullptr;
 
-	CNMRIDoc* theDoc;
-
-protected:
+private:
 	CMFCPropertyGridCtrl m_wndPropList;
 
 // Implementation
-public:
-	virtual ~CPropertiesWnd();
-
-protected:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-
-
-	DECLARE_MESSAGE_MAP()
-
 	void InitPropList();
 
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
 	afx_msg LRESULT OnPropertyChanged(__in WPARAM wparam, __in LPARAM lparam);
+
+	DECLARE_MESSAGE_MAP()
 };
 

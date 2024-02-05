@@ -12,21 +12,21 @@ protected: // create from serialization only
 	DECLARE_DYNCREATE(CMainFrame)
 
 // Attributes
-public:
 // Operations
+	void Init();
+
+private:
 // Overrides
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
+	BOOL PreCreateWindow(CREATESTRUCT& cs) override;
+	BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr) override;
 
 // Implementation
-public:
-	virtual ~CMainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	void AssertValid() const override;
+	void Dump(CDumpContext& dc) const override;
 #endif
 
-protected:  // control bar embedded members
+// control bar embedded members
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
@@ -34,11 +34,9 @@ protected:  // control bar embedded members
 
 	CSplitterWnd      m_wndSplitter;
 
-public:
 	CPropertiesWnd    m_wndProperties;
 
 // Generated message map functions
-protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnViewCustomize();
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
@@ -51,10 +49,8 @@ protected:
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
 
-public:
 	afx_msg void OnFileOpen();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
-	void Init();
 	afx_msg void OnViewAnimation();
 	afx_msg void OnUpdateViewAnimation(CCmdUI* pCmdUI);
 };

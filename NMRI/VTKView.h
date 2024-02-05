@@ -58,8 +58,6 @@ class CVTKView;
 class ErrorObserver : public vtkCommand
 {
 public:
-	ErrorObserver() : theView(nullptr), Error(false), Warning(false), ErrorMessage(""), WarningMessage("") {}
-  
 	static ErrorObserver *New();
 
 	bool GetError() const
@@ -80,7 +78,7 @@ public:
 		WarningMessage = "";
 	}
 
-	virtual void Execute(vtkObject *vtkNotUsed(caller), unsigned long event, void *calldata);
+	void Execute(vtkObject *vtkNotUsed(caller), unsigned long event, void *calldata) override;
 
 	std::string GetErrorMessage() const
 	{
@@ -92,11 +90,15 @@ public:
 		return WarningMessage;
 	}
 
-	CVTKView* theView;
+	void SetView(CVTKView* view)
+	{
+		theView = view;
+	}
 
 private:
-	bool        Error;
-	bool        Warning;
+	CVTKView* theView = nullptr;
+	bool        Error = false;
+	bool        Warning = false;
 	std::string ErrorMessage;
 	std::string WarningMessage;
 };
@@ -109,42 +111,40 @@ protected: // create from serialization only
 	DECLARE_DYNCREATE(CVTKView)
 
 	static bool IsHandledMessage(UINT message);
-// Attributes
+
 public:
+	~CVTKView() override;
 	CNMRIDoc* GetDocument() const;
 
 // Operations
-public:
-	ErrorObserver* errorObserver = nullptr;
-
-	vtkImageData* dataImage = nullptr;
-
 	void RecoverFromWarning();
+	void GrabResultsFromDoc();
+	void UpdateTransferFunctions();
 
+private:
 // Overrides
-public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-
-protected:
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	void OnDraw(CDC* pDC) override;  // overridden to draw this view
+	BOOL OnPreparePrinting(CPrintInfo* pInfo) override;
+	void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo) override;
+	void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo) override;
 
 // Implementation
-public:
-	virtual ~CVTKView();
+	void Pipeline();
+
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	void AssertValid() const override;
+	void Dump(CDumpContext& dc) const override;
 #endif
 
-protected:
-	vtkWin32OpenGLRenderWindow *renWin;
-	vtkRenderer *ren;
-	vtkWin32RenderWindowInteractor *iren;
+	ErrorObserver* errorObserver = nullptr;
+	vtkImageData* dataImage = nullptr;
 
-	vtkGPUVolumeRayCastMapper* volumeMapper;
-	vtkVolume* volume;
+	vtkWin32OpenGLRenderWindow *renWin;
+	vtkRenderer *ren = nullptr;
+	vtkWin32RenderWindowInteractor *iren = nullptr;
+
+	vtkGPUVolumeRayCastMapper* volumeMapper = nullptr;
+	vtkVolume* volume = nullptr;
 
 	vtkSmartPointer<vtkTextActor> textActor;
 
@@ -153,20 +153,15 @@ protected:
 	unsigned int NrFrames = 0;
 
 // Generated message map functions
-protected:
 	afx_msg void OnFilePrintPreview();
-	DECLARE_MESSAGE_MAP()
-public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	virtual void OnInitialUpdate();
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-	void Pipeline();
+	void OnInitialUpdate() override;
+	LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam) override;
 	afx_msg void OnDestroy();
 	//afx_msg void OnTimer(UINT_PTR nIDEvent);
-	void GrabResultsFromDoc();
-
-	void UpdateTransferFunctions();
+	
+	DECLARE_MESSAGE_MAP()
 };
 
 #ifndef _DEBUG  // debug version in DFTView.cpp

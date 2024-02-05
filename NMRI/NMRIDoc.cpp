@@ -32,16 +32,6 @@ END_MESSAGE_MAP()
 
 // CNMRIDoc construction/destruction
 
-CNMRIDoc::CNMRIDoc()
-	: animate(true)
-{
-	// TODO: add one-time construction code here
-}
-
-CNMRIDoc::~CNMRIDoc()
-{
-}
-
 BOOL CNMRIDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
@@ -117,9 +107,9 @@ void CNMRIDoc::SetSearchContent(const CString& value)
 	}
 	else
 	{
-		CMFCFilterChunkValueImpl *pChunk = NULL;
+		CMFCFilterChunkValueImpl *pChunk = nullptr;
 		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
-		if (pChunk != NULL)
+		if (pChunk != nullptr)
 		{
 			pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
 			SetChunkValue(pChunk);
@@ -163,7 +153,7 @@ bool CNMRIDoc::Load(const CString& name)
 void CNMRIDoc::UpdateViews()
 {
 	POSITION pos = GetFirstViewPosition();
-	while (pos != NULL) {
+	while (pos != nullptr) {
 		CView* pView = GetNextView(pos);
 		
 		// the other one refreshes itself by timer
@@ -179,7 +169,7 @@ void CNMRIDoc::UpdateViews()
 void CNMRIDoc::Update3DOptions()
 {
 	POSITION pos = GetFirstViewPosition();
-	while (pos != NULL) {
+	while (pos != nullptr) {
 		CView* pView = GetNextView(pos);
 
 		// the other one refreshes itself by timer

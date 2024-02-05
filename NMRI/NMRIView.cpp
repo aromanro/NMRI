@@ -36,16 +36,6 @@ END_MESSAGE_MAP()
 
 // CNMRIView construction/destruction
 
-CNMRIView::CNMRIView()
-	: theFrame(0), timer(NULL)
-{
-	// TODO: add construction code here
-}
-
-CNMRIView::~CNMRIView()
-{
-}
-
 BOOL CNMRIView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
@@ -188,7 +178,7 @@ int CNMRIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-	timer = SetTimer(1, 500, NULL);
+	timer = SetTimer(1, 500, nullptr);
 
 	return 0;
 }

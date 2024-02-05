@@ -11,14 +11,14 @@
 class CNMRIDoc : public CDocument
 {
 protected: // create from serialization only
-	CNMRIDoc();
+	CNMRIDoc() = default;
 	DECLARE_DYNCREATE(CNMRIDoc)
 
 // Attributes
 public:
 	NMRIFile theFile;
 
-	bool animate;
+	bool animate = true;
 
 	bool colorFunction = true;
 	bool opacityFunction = true;
@@ -27,36 +27,30 @@ public:
 	int gradientVal = 50;
 
 // Operations
-public:
-// Overrides
-public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-#ifdef SHARED_HANDLERS
-	virtual void InitializeSearchContent();
-	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
-#endif // SHARED_HANDLERS
-
-// Implementation
-public:
-	virtual ~CNMRIDoc();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-
+	bool Load(const CString& name);
 	void UpdateViews();
 	void Update3DOptions();
 
-protected:
+private:
+// Overrides
+	BOOL OnNewDocument() override;
+	void Serialize(CArchive& ar) override;
+#ifdef SHARED_HANDLERS
+	void InitializeSearchContent() override;
+	void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds) override;
+#endif // SHARED_HANDLERS
+
+// Implementation
+#ifdef _DEBUG
+	void AssertValid() const override;
+	void Dump(CDumpContext& dc) const override;
+#endif
+
 // Generated message map functions
-protected:
 	DECLARE_MESSAGE_MAP()
 
 #ifdef SHARED_HANDLERS
 	// Helper function that sets search content for a Search Handler
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
-public:
-	bool Load(const CString& name);
 };

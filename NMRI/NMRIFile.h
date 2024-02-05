@@ -44,7 +44,7 @@ public:
 	const std::complex<double>* GetRealFrame() const { return theFrame; }
 	const std::complex<double>* GetFrame() const { return srcFrame; }
 
-protected:
+private:
 	inline std::complex<double> GetValue(int frame, int posx, int posy) const
 	{
 		if (frame >= NrFrames) return std::complex<double>(0, 0);
