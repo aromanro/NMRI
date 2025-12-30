@@ -155,7 +155,7 @@ void CVTKView::OnDraw(CDC* pDC)
 		int cyWindow = size[1];
 		const float fx = static_cast<float>(cxPage) / static_cast<float>(cxWindow);
 		const float fy = static_cast<float>(cyPage) / static_cast<float>(cyWindow);
-		const float scale = min(fx, fy);
+		const float scale = std::min(fx, fy);
 		const int x = static_cast<int>(scale * static_cast<float>(cxWindow));
 		const int y = static_cast<int>(scale * static_cast<float>(cyWindow));
 
@@ -443,8 +443,8 @@ LRESULT CVTKView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (iren && iren->GetInitialized() && GetSafeHwnd())
 		{
-			LRESULT res  = vtkHandleMessage(GetSafeHwnd(), message, wParam, lParam);
-			//LRESULT res = vtkHandleMessage2(GetSafeHwnd(), message, wParam, lParam, iren);
+			//LRESULT res  = vtkHandleMessage(GetSafeHwnd(), message, wParam, lParam);
+			LRESULT res = vtkHandleMessage2(GetSafeHwnd(), message, wParam, lParam, iren);
 			//if (message != WM_TIMER || wParam != timer) 
 			return res;
 		}
@@ -552,7 +552,7 @@ void CVTKView::GrabResultsFromDoc()
 			for (unsigned int j = 0; j < Height; ++j)
 			{
 				const double val = std::abs(image[Width * i + j]);
-				m = max(m, val);
+				m = std::max(m, val);
 			}
 	}
 

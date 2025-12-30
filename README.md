@@ -15,6 +15,15 @@ It also has a 3D view implemented with VTK.
 It needs the Head2D.dat raw data file one can find here: http://download.nvidia.com/developer/GPU_Gems_2/CD/Index.html in the source tree from Chap. 48, Medical Image Reconstruction with the FFT.
 By the way, here is the chapter, in case somebody wants to look over it: https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter48.html
 
+### TOOLS
+
+The project compiles on Windows with Visual Studio 2026 (the code can be compiled with older versions starting with VS 2015, but it's currently maintained with VS 2026 and C++ 17 or higher).
+
+### LIBRARIES
+
+The program requires mfc and the other typical VC++ runtime libraries.
+Additional libraries needed are FFTW and VTK, pointed above.
+
 ### PROGRAM IN ACTION
 
 [![Program video](https://img.youtube.com/vi/toGlT4gNKds/0.jpg)](https://youtu.be/toGlT4gNKds)

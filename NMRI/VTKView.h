@@ -9,6 +9,9 @@
 #define new ::new
 #endif
 
+#undef min
+#undef max
+
 #include <vtkFixedPointVolumeRayCastMapper.h>
 //#include <vtkVolumeRayCastCompositeFunction.h>
 #include <vtkVolumeProperty.h>
